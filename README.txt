@@ -1,7 +1,4 @@
-Adds support for Paul Neuhaus ZigBee devices.
-
-
-supported Devices:
+Supported Devices:
 
 - Lights (NLG-CCT)
 - Remote (NLG-remote)

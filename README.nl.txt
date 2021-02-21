@@ -1,4 +1,4 @@
 Ondersteunde apparaten:
 
-- Lights (NLG-CCT)
+- Light (NLG-CCT)
 - Remote (NLG-remote)

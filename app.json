@@ -1,7 +1,7 @@
 {
   "id": "de.mhaid.neuhaus",
   "sdk": 3,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=5.0.0",
   "brandColor": "#006eb7",
   "name": {

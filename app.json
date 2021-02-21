@@ -1,7 +1,7 @@
 {
   "id": "de.mhaid.neuhaus",
   "sdk": 3,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "brandColor": "#006eb7",
   "name": {
@@ -94,7 +94,7 @@
               8,
               768
             ],
-            "bindings": [ ]
+            "bindings": []
           }
         },
         "learnmode": {
@@ -115,7 +115,10 @@
         "light_temperature"
       ],
       "energy": {
-        "batteries": ["AAA", "AAA"]
+        "batteries": [
+          "AAA",
+          "AAA"
+        ]
       },
       "name": {
         "en": "Remote NLG",
@@ -137,7 +140,7 @@
               8,
               768
             ],
-            "bindings": [ ]
+            "bindings": []
           }
         },
         "learnmode": {
@@ -269,7 +272,7 @@
     ]
   },
   "capabilities": {
-    "custom_onoff":{
+    "custom_onoff": {
       "type": "boolean",
       "title": {
         "en": "Turned on",
@@ -339,7 +342,7 @@
       },
       "uiComponent": "toggle"
     },
-    "custom_dim":{
+    "custom_dim": {
       "type": "number",
       "title": {
         "en": "Dim level",

@@ -1,0 +1,343 @@
+{
+  "id": "de.mhaid.neuhaus",
+  "sdk": 3,
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "brandColor": "#006eb7",
+  "name": {
+    "en": "Paul Neuhaus",
+    "nl": "Paul Neuhaus",
+    "de": "Paul Neuhaus"
+  },
+  "description": {
+    "en": "We are Neuhaus",
+    "nl": "We are Neuhaus",
+    "de": "Wir sind Neuhaus"
+  },
+  "category": [
+    "lights"
+  ],
+  "tags": {
+    "en": [
+      "Nehaus",
+      "Paul",
+      "light"
+    ],
+    "nl": [
+      "Nehaus",
+      "Paul",
+      "light"
+    ],
+    "de": [
+      "Nehaus",
+      "Paul",
+      "Licht"
+    ]
+  },
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "email": "mhaid2016@outlook.com",
+    "name": "Morris Haid"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "email": "moh2014@live.de",
+        "name": "Michael Haid"
+      },
+      {
+        "email": "mhaid2016@outlook.com",
+        "name": "Morris Haid"
+      }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/mhaid/de.mhaid.neuhaus/issues"
+  },
+  "source": "https://github.com/mhaid/de.mhaid.neuhaus/",
+  "support": "mailto:mhaid2016@outlook.com",
+  "drivers": [
+    {
+      "id": "NLG-CCT",
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature"
+      ],
+      "energy": {
+        "approximation": {
+          "usageOn": 15,
+          "usageOff": 1
+        }
+      },
+      "name": {
+        "en": "Light NLG-CCT",
+        "nl": "Light NLG-CCT",
+        "de": "Licht NLG-CCT"
+      },
+      "images": {
+        "large": "/drivers/NLG-CCT/assets/images/large.png",
+        "small": "/drivers/NLG-CCT/assets/images/small.png"
+      },
+      "zigbee": {
+        "manufacturerName": "Neuhaus Lighting Group",
+        "productId": "NLG-CCT light",
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              6,
+              8,
+              768
+            ],
+            "bindings": [ ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
+            "nl": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
+            "de": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times."
+          }
+        }
+      }
+    },
+    {
+      "id": "NLG-remote",
+      "class": "remote",
+      "capabilities": [
+        "custom_onoff",
+        "custom_dim",
+        "light_temperature"
+      ],
+      "energy": {
+        "batteries": ["AAA", "AAA"]
+      },
+      "name": {
+        "en": "Remote NLG",
+        "nl": "Remote NLG",
+        "de": "Fernbedienung NLG"
+      },
+      "images": {
+        "large": "/drivers/NLG-remote/assets/images/large.png",
+        "small": "/drivers/NLG-remote/assets/images/small.png"
+      },
+      "zigbee": {
+        "manufacturerName": "Neuhaus Lighting Group",
+        "productId": "NLG-remote",
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              6,
+              8,
+              768
+            ],
+            "bindings": [ ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
+            "nl": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
+            "de": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times."
+          }
+        }
+      }
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "color_changed",
+        "title": {
+          "en": "Color changed",
+          "nl": "Color changed",
+          "de": "Farbe geändert"
+        }
+      }
+    ]
+  },
+  "capabilities": {
+    "custom_onoff":{
+      "type": "boolean",
+      "title": {
+        "en": "Turned on",
+        "nl": "Aangezet",
+        "de": "Eingeschaltet",
+        "fr": "Activé",
+        "it": "Attivato",
+        "sv": "Aktiverad",
+        "no": "Slått på",
+        "es": "Encendido",
+        "da": "Tændt"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Turned on",
+        "nl": "Aangezet",
+        "de": "Eingeschaltet",
+        "fr": "Activé",
+        "it": "Attivato",
+        "sv": "Aktiverad",
+        "no": "Slått på",
+        "es": "Encendido",
+        "da": "Tændt"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off",
+        "nl": "Uitgezet",
+        "de": "Ausgeschaltet",
+        "fr": "Désactivé",
+        "it": "Disattivato",
+        "sv": "Inaktiverad",
+        "no": "Slått av",
+        "es": "Apagado",
+        "da": "Slukket"
+      },
+      "options": {
+        "setOnDim": {
+          "type": "boolean",
+          "default": true,
+          "desc": {
+            "en": "When a device has both an `onoff` and `dim` capability, and Homey wants to turn the device on AND to a specific dim value, set this capability to `false` to prevent Homey from sending a set command.",
+            "de": "Wenn ein Gerät sowohl 'An/Aus'- als auch 'Dimm'-Fähigkeit hat und Homey das Gerät anschalten UND auf einen bestimmten Wert dimmen will, setze diese Fähigkeit auf 'false', um Homey am Senden eines Setzen-Befehls zu hindern.",
+            "fr": "Quand un appareil peut `allumer/éteindre` et `estomper`, et que Homey veut allumer l'appareil ET sur une valeur d'estompage spécifique, définissez cette capacité sur `faux` pour empêcher Homey d'envoyer une commande de définition.",
+            "it": "Quando un dispositivo può 'accendersi' e 'attenuarsi' e Homey desidera attivare il dispositivo E definire un valore specifico, imposta questa funzione su 'falso' per impedire a Homey di inviare un comando di definizione.",
+            "sv": "När en enhet har både en `på/av`- och `dim`-funktionalitet och Homey vill slå på enheten OCH till ett specifikt dimvärde, sätt den här funktionen till `falsk` för att förhindra att Homey skickar ett inställningskommando.",
+            "no": "Når en enhet har både en `på/av`- og en `dempe`-funksjon og Homey vil slå på enheten OG sette dempingen til en spesifikk verdi, sett denne egenskapen til `usann` for å forhindre at Homey sender en innstillingskommando.",
+            "es": "Cuando un dispositivo tiene tanto la capacidad 'encender/apagar' como la de 'intensidad de la luz', y Homey quiere encender el dispositivo Y ajustar una intensidad concreta, configura esta capacidad como 'falso' para evitar que Homey envíe un comando de configuración.",
+            "da": "Når en enhed har både en `tænd/sluk`- og en `dæmpe`-funktion, og Homey vil tænde for enheden OG indstille til en specifik dæmpeværdi, skal denne funktion indstilles til  `falsk` for at forhindre, at Homey sender en indstillingskommando."
+          }
+        },
+        "greyout": {
+          "type": "boolean",
+          "default": false,
+          "desc": {
+            "en": "When this capability is false, give a visual hint to greyout the device.",
+            "de": "wenn diese Fähigkeit 'false' ist, gibt es einen visuellenen Hinweis, um das Gerät auszugrauen.",
+            "fr": "Quand cette capacité est fausse, donnez un indice visuel pour griser cet appareil.",
+            "it": "Quando questa funzione è impostata su falso, dai un indizio visivo per far apparire questo dispositivo in grigio.",
+            "sv": "När den här funktionen är falsk, ge en ett visuellt tips för att gråa ut enheten.",
+            "no": "Når denne egenskapen er usann, gi et visuelt tips for å vise enheten i grått.",
+            "es": "Cuando esta capacidad es falsa, da una indicación visual para poner en gris el dispositivo.",
+            "da": "Når denne funktion er falsk, skal du give et visuelt tip for at vise enheden i grå."
+          }
+        }
+      },
+      "uiComponent": "toggle",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "onoff_true",
+            "title": {
+              "en": "Turned on",
+              "nl": "Aangezet ",
+              "de": "Angeschaltet",
+              "fr": "Activé",
+              "it": "Attivato",
+              "sv": "Aktiverad",
+              "no": "Slått på",
+              "es": "Encendido",
+              "da": "Tændt"
+            }
+          },
+          {
+            "id": "onoff_false",
+            "title": {
+              "en": "Turned off",
+              "nl": "Uitgezet",
+              "de": "Ausgeschaltet",
+              "fr": "Désactivé",
+              "it": "Disattivato",
+              "sv": "Inaktiverad",
+              "no": "Slått av",
+              "es": "Apagado",
+              "da": "Slukket"
+            }
+          }
+        ],
+        "conditions": [
+          {
+            "id": "on",
+            "title": {
+              "en": "Is turned !{{on|off}}",
+              "nl": "Is !{{aan|uit}}",
+              "de": "Ist !{{an|aus}}",
+              "fr": "Est !{{activé|désactivé}}",
+              "it": "È !{{attivato|disattivato}}",
+              "sv": "Är !{{på|av}}",
+              "no": "Er slått !{{på|av}}",
+              "es": "Está !{{encendido|apagado}}",
+              "da": "Er !{{tændt|slukket}}"
+            }
+          }
+        ]
+      }
+    },
+    "custom_dim":{
+      "type": "number",
+      "title": {
+        "en": "Dim level",
+        "nl": "Dim niveau",
+        "de": "Dimmlevel",
+        "fr": "Intensité lumineuse",
+        "it": "Intensità luminosa",
+        "sv": "Dimningsnivå",
+        "no": "Dempingsnivå",
+        "es": "Intensidad de la luz",
+        "da": "Lysniveau"
+      },
+      "chartType": "stepLine",
+      "min": 0,
+      "max": 1,
+      "decimals": 2,
+      "units": "%",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "slider",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "dim_changed",
+            "title": {
+              "en": "Dim-level changed",
+              "nl": "Dim-niveau veranderd",
+              "de": "Dimm-Niveau geändert",
+              "fr": "Intensité lumineuse a été modifiée",
+              "it": "Intensità luminosa modificata",
+              "sv": "Dimningsnivå ändrades",
+              "no": "Dempingsnivå ble endret",
+              "es": "La intensidad de la luz ha cambiado",
+              "da": "Lysniveau ændret"
+            },
+            "tokens": [
+              {
+                "name": "dim",
+                "type": "number",
+                "title": {
+                  "en": "Level",
+                  "nl": "Niveau",
+                  "de": "Niveau",
+                  "fr": "Niveau",
+                  "it": "Livello",
+                  "sv": "Nivå",
+                  "no": "Nivå",
+                  "es": "Nivel",
+                  "da": "Niveau"
+                },
+                "example": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

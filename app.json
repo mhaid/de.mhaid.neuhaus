@@ -99,9 +99,9 @@
         },
         "learnmode": {
           "instruction": {
-            "en": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
-            "nl": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
-            "de": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times."
+            "en": "Switch the device off and on again five times with a delay of ~1 second. The light flashes three times for confirmation.",
+            "nl": "Zet het apparaat vijf keer uit en aan met een vertraging van ~1 seconde. Het lampje zal drie keer knipperen ter bevestiging.",
+            "de": "Schalten Sie das Gerät mit einer Verzögerung von ~1 Sekunde fünfmal aus und wieder ein. Das Licht blinkt dreimal zur Bestätigung."
           }
         }
       }
@@ -142,9 +142,9 @@
         },
         "learnmode": {
           "instruction": {
-            "en": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
-            "nl": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times.",
-            "de": "Turn device off, wait 1 seconds then turn it back on. Repeat the process 5 times. The light will blink three times."
+            "en": "Reset the remote control first: Press and hold the 'W' button for 5 seconds, the status LED will flash. Now press the power button to confirm. Now put the device in learning mode: Press the power button for ~5 seconds.",
+            "nl": "Reset eerst de afstandsbediening: Houdt de 'W'-toets gedurende 5 seconden ingedrukt, de status-led zal knipperen. Druk nu op de aan/uit-toets ter bevestiging. Zet het apparaat nu in de leermodus: Druk de aan/uit-toets gedurende ~5 seconden in.",
+            "de": "Setzen Sie zuerst die Fernbedienung zurück: Halten Sie die 'W'-Taste für 5 Sekunden gedrückt, die Status-LED blinkt. Drücken Sie nun zur Bestätigung die Ein/Aus-Taste. Setzen Sie nun das Gerät in den Lernmodus: Drücken Sie die on/off-Taste für ~5 Sekunden."
           }
         }
       }
@@ -153,12 +153,118 @@
   "flow": {
     "triggers": [
       {
+        "id": "on_changed",
+        "title": {
+          "en": "Turned on",
+          "nl": "Aangezet ",
+          "de": "Angeschaltet",
+          "fr": "Activé",
+          "it": "Attivato",
+          "sv": "Aktiverad",
+          "no": "Slått på",
+          "es": "Encendido",
+          "da": "Tændt"
+        },
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "off_changed",
+        "title": {
+          "en": "Turned off",
+          "nl": "Uitgezet",
+          "de": "Ausgeschaltet",
+          "fr": "Désactivé",
+          "it": "Disattivato",
+          "sv": "Inaktiverad",
+          "no": "Slått av",
+          "es": "Apagado",
+          "da": "Slukket"
+        },
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "dim_changed",
+        "title": {
+          "en": "Dim-level changed",
+          "nl": "Dim-niveau veranderd",
+          "de": "Dimm-Niveau geändert",
+          "fr": "Intensité lumineuse a été modifiée",
+          "it": "Intensità luminosa modificata",
+          "sv": "Dimningsnivå ändrades",
+          "no": "Dempingsnivå ble endret",
+          "es": "La intensidad de la luz ha cambiado",
+          "da": "Lysniveau ændret"
+        },
+        "tokens": [
+          {
+            "name": "dim",
+            "type": "number",
+            "title": {
+              "en": "Level",
+              "nl": "Niveau",
+              "de": "Niveau",
+              "fr": "Niveau",
+              "it": "Livello",
+              "sv": "Nivå",
+              "no": "Nivå",
+              "es": "Nivel",
+              "da": "Niveau"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
         "id": "color_changed",
         "title": {
           "en": "Color changed",
-          "nl": "Color changed",
+          "nl": "Kleur veranderd",
           "de": "Farbe geändert"
-        }
+        },
+        "tokens": [
+          {
+            "name": "color",
+            "type": "number",
+            "title": {
+              "en": "Level",
+              "nl": "Niveau",
+              "de": "Niveau",
+              "fr": "Niveau",
+              "it": "Livello",
+              "sv": "Nivå",
+              "no": "Nivå",
+              "es": "Nivel",
+              "da": "Niveau"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
       }
     ]
   },
@@ -231,55 +337,7 @@
           }
         }
       },
-      "uiComponent": "toggle",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "onoff_true",
-            "title": {
-              "en": "Turned on",
-              "nl": "Aangezet ",
-              "de": "Angeschaltet",
-              "fr": "Activé",
-              "it": "Attivato",
-              "sv": "Aktiverad",
-              "no": "Slått på",
-              "es": "Encendido",
-              "da": "Tændt"
-            }
-          },
-          {
-            "id": "onoff_false",
-            "title": {
-              "en": "Turned off",
-              "nl": "Uitgezet",
-              "de": "Ausgeschaltet",
-              "fr": "Désactivé",
-              "it": "Disattivato",
-              "sv": "Inaktiverad",
-              "no": "Slått av",
-              "es": "Apagado",
-              "da": "Slukket"
-            }
-          }
-        ],
-        "conditions": [
-          {
-            "id": "on",
-            "title": {
-              "en": "Is turned !{{on|off}}",
-              "nl": "Is !{{aan|uit}}",
-              "de": "Ist !{{an|aus}}",
-              "fr": "Est !{{activé|désactivé}}",
-              "it": "È !{{attivato|disattivato}}",
-              "sv": "Är !{{på|av}}",
-              "no": "Er slått !{{på|av}}",
-              "es": "Está !{{encendido|apagado}}",
-              "da": "Er !{{tændt|slukket}}"
-            }
-          }
-        ]
-      }
+      "uiComponent": "toggle"
     },
     "custom_dim":{
       "type": "number",
@@ -301,43 +359,7 @@
       "units": "%",
       "getable": true,
       "setable": false,
-      "uiComponent": "slider",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "dim_changed",
-            "title": {
-              "en": "Dim-level changed",
-              "nl": "Dim-niveau veranderd",
-              "de": "Dimm-Niveau geändert",
-              "fr": "Intensité lumineuse a été modifiée",
-              "it": "Intensità luminosa modificata",
-              "sv": "Dimningsnivå ändrades",
-              "no": "Dempingsnivå ble endret",
-              "es": "La intensidad de la luz ha cambiado",
-              "da": "Lysniveau ændret"
-            },
-            "tokens": [
-              {
-                "name": "dim",
-                "type": "number",
-                "title": {
-                  "en": "Level",
-                  "nl": "Niveau",
-                  "de": "Niveau",
-                  "fr": "Niveau",
-                  "it": "Livello",
-                  "sv": "Nivå",
-                  "no": "Nivå",
-                  "es": "Nivel",
-                  "da": "Niveau"
-                },
-                "example": 0.5
-              }
-            ]
-          }
-        ]
-      }
+      "uiComponent": "slider"
     }
   }
 }

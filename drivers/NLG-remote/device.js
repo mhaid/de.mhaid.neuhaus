@@ -53,11 +53,15 @@ class Neumann_NLG_remote extends ZigBeeDevice
 	_onOnCmd(endpoint) {
 		console.log('_onOn',endpoint);
 		this.setCapabilityValue("custom_onoff", true);
+
+		this.triggerFlow({id: "on_changed"}).then(this.log).catch(this.error);
 	}
 
 	_onOffCmd(endpoint){
 		console.log('_onOff',endpoint);
 		this.setCapabilityValue("custom_onoff", false);
+
+		this.triggerFlow({id: "off_changed"}).then(this.log).catch(this.error);
 	}
 
 	//LevelControl
@@ -76,6 +80,8 @@ class Neumann_NLG_remote extends ZigBeeDevice
 
 		console.log('_onLevelStep',mode,stepSize,stepSizeParsed,transitionTime,homeyValue,endpoint);
 		this.setCapabilityValue("custom_dim", homeyValue);
+
+		this.triggerFlow({id: "dim_changed",tokens:{dim: stepSizeParsed}}).then(this.log).catch(this.error);
 	}
 
 	_onLevelStopCmd (endpoint) {
@@ -83,6 +89,9 @@ class Neumann_NLG_remote extends ZigBeeDevice
 		if(levelMoveInterval != null) {
 			this.homey.clearInterval(levelMoveInterval);
 			levelMoveInterval = null;
+
+			var homeyValue = this.getCapabilityValue("custom_dim");
+			this.triggerFlow({id: "dim_changed",tokens:{dim: homeyValue}}).then(this.log).catch(this.error);
 		}
 	}
 
@@ -104,6 +113,8 @@ class Neumann_NLG_remote extends ZigBeeDevice
 
 		console.log('_onMoveToHue',hue,hueParsed,endpoint);
 		this.setCapabilityValue("light_temperature", hueParsed);
+
+		this.triggerFlow({id: "color_changed",tokens:{color: hueParsed}}).then(this.log).catch(this.error);
 	}
 	
 	_onMoveToSaturationCmd ({ saturation }, endpoint) {
@@ -111,6 +122,8 @@ class Neumann_NLG_remote extends ZigBeeDevice
 
 		console.log("_onMoveToSaturation",saturation,saturationParsed,endpoint);
 		this.setCapabilityValue("light_temperature", colorTemperatureParsed);
+
+		this.triggerFlow({id: "color_changed",tokens:{color: saturationParsed}}).then(this.log).catch(this.error);
 	}
 	
 	_onMoveToColorTemperatureCmd ({ colorTemperature, transitionTime }, endpoint) {
@@ -119,8 +132,8 @@ class Neumann_NLG_remote extends ZigBeeDevice
 
 		console.log("_onMoveToColorTemperature",colorTemperature,colorTemperatureParsed,transitionTime,endpoint);
 		this.setCapabilityValue("light_temperature", colorTemperatureParsed);
-		let colorTrigger = this.homey.flow.getTriggerCard('color_changed');
-		colorTrigger.trigger().catch(this.error).then(this.log);
+
+		this.triggerFlow({id: "color_changed",tokens:{color: colorTemperatureParsed}}).then(this.log).catch(this.error);
 	}
 }
 

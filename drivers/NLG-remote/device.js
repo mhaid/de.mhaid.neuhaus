@@ -9,6 +9,8 @@ const { debug,CLUSTER } = require('zigbee-clusters');
 debug(true);
 
 var levelMoveInterval = null;
+var currentMoveMode = null;
+var dimTapped = false;
 
 class Neumann_NLG_remote extends ZigBeeDevice 
 {
@@ -54,14 +56,14 @@ class Neumann_NLG_remote extends ZigBeeDevice
 		console.log('_onOn',endpoint);
 		this.setCapabilityValue("custom_onoff", true);
 
-		this.triggerFlow({id: "on_changed"}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "on_changed"}).then().catch(this.error);
 	}
 
 	_onOffCmd(endpoint){
 		console.log('_onOff',endpoint);
 		this.setCapabilityValue("custom_onoff", false);
 
-		this.triggerFlow({id: "off_changed"}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "off_changed"}).then().catch(this.error);
 	}
 
 	//LevelControl
@@ -80,31 +82,68 @@ class Neumann_NLG_remote extends ZigBeeDevice
 
 		console.log('_onLevelStep',mode,stepSize,stepSizeParsed,transitionTime,homeyValue,endpoint);
 		this.setCapabilityValue("custom_dim", homeyValue);
-
-		this.triggerFlow({id: "dim_changed",tokens:{dim: stepSizeParsed}}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "dim_changed",tokens:{dim: stepSizeParsed}}).then().catch(this.error);
 	}
 
 	_onLevelStopCmd (endpoint) {
 		console.log('_onLevelStop',endpoint);
-		if(levelMoveInterval != null) {
-			this.homey.clearInterval(levelMoveInterval);
+		if (levelMoveInterval == "stopped") {
 			levelMoveInterval = null;
+		} else if(levelMoveInterval != null) {
+
+			this.homey.clearInterval(levelMoveInterval);
+			if(currentMoveMode == null) {
+				currentMoveMode = "Up";
+			}
 
 			var homeyValue = this.getCapabilityValue("custom_dim");
-			this.triggerFlow({id: "dim_changed",tokens:{dim: homeyValue}}).then(this.log).catch(this.error);
+			this.triggerFlow({id: "dim_stop",tokens:{moveMode: currentMoveMode}}).then().catch(this.error);
+			this.triggerFlow({id: "dim_changed",tokens:{dim: homeyValue}}).then().catch(this.error);
+			
+			levelMoveInterval = null;
+			currentMoveMode = null;
+		} else {
+			dimTapped = true;
 		}
 	}
 
 	_onLevelMoveCmd ({ moveMode, rate }, endpoint) {
 		var rateParsed = rate/255/100;
 
+		if(levelMoveInterval != null) {
+			this._onLevelStopCmd(endpoint);
+		}
+		currentMoveMode = moveMode;
+
 		console.log('_onLevelMove',moveMode,rate,rateParsed,endpoint);
-		levelMoveInterval = this.homey.setInterval(() => {
-			var newVal = this.getCapabilityValue("custom_dim");
-			if(moveMode=="up"){newVal += rateParsed; if(newVal>1){newVal=1;}}
-			else{newVal -= rateParsed; if(newVal<0){newVal=0;}}
-			this.setCapabilityValue("custom_dim", newVal);
-		}, 10);
+
+		this.homey.setTimeout(() => {
+			if(dimTapped) {
+				// Small Tap on dim (less than 1 seconds)
+				if(currentMoveMode == null) {
+					currentMoveMode = "Up";
+				}
+
+				this.triggerFlow({id: "dim_tap",tokens:{moveMode: currentMoveMode}}).then().catch(this.error);
+				currentMoveMode = null;
+				dimTapped = false;
+			} else {
+				this.triggerFlow({id: "dim_start",tokens:{moveMode: currentMoveMode}}).then().catch(this.error);
+
+				levelMoveInterval = this.homey.setInterval(() => {
+					var newVal = this.getCapabilityValue("custom_dim");
+					if(moveMode=="up"){newVal += rateParsed; if(newVal>1){newVal=1;}}
+					else{newVal -= rateParsed; if(newVal<0){newVal=0;}}
+					this.setCapabilityValue("custom_dim", newVal);
+					this.triggerFlow({id: "dim_step",tokens:{dim: newVal,moveMode: moveMode}}).then().catch(this.error);
+		
+					if(newVal == 0 || newVal == 1) {
+						this._onLevelStopCmd(endpoint);
+						levelMoveInterval = "stopped";
+					}
+				}, 10);
+			}
+		}, 1000);
 	}
 
 	//ColorControl
@@ -114,7 +153,7 @@ class Neumann_NLG_remote extends ZigBeeDevice
 		console.log('_onMoveToHue',hue,hueParsed,endpoint);
 		this.setCapabilityValue("light_temperature", hueParsed);
 
-		this.triggerFlow({id: "color_changed",tokens:{color: hueParsed}}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "color_changed",tokens:{color: hueParsed}}).then().catch(this.error);
 	}
 	
 	_onMoveToSaturationCmd ({ saturation }, endpoint) {
@@ -123,7 +162,7 @@ class Neumann_NLG_remote extends ZigBeeDevice
 		console.log("_onMoveToSaturation",saturation,saturationParsed,endpoint);
 		this.setCapabilityValue("light_temperature", colorTemperatureParsed);
 
-		this.triggerFlow({id: "color_changed",tokens:{color: saturationParsed}}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "color_changed",tokens:{color: saturationParsed}}).then().catch(this.error);
 	}
 	
 	_onMoveToColorTemperatureCmd ({ colorTemperature, transitionTime }, endpoint) {
@@ -133,7 +172,7 @@ class Neumann_NLG_remote extends ZigBeeDevice
 		console.log("_onMoveToColorTemperature",colorTemperature,colorTemperatureParsed,transitionTime,endpoint);
 		this.setCapabilityValue("light_temperature", colorTemperatureParsed);
 
-		this.triggerFlow({id: "color_changed",tokens:{color: colorTemperatureParsed}}).then(this.log).catch(this.error);
+		this.triggerFlow({id: "color_changed",tokens:{color: colorTemperatureParsed}}).then().catch(this.error);
 	}
 }
 

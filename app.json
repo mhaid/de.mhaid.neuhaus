@@ -1,7 +1,7 @@
 {
   "id": "de.mhaid.neuhaus",
   "sdk": 3,
-  "version": "1.0.2",
+  "version": "1.1.0",
   "compatibility": ">=5.0.0",
   "brandColor": "#006eb7",
   "name": {
@@ -226,6 +226,178 @@
               "da": "Niveau"
             },
             "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "dim_step",
+        "title": {
+          "en": "Dim-level is changing",
+          "nl": "Dim-niveau is aan het veranderen",
+          "de": "Dimm-Niveau ändert sicht",
+          "fr": "Intensité lumineuse change",
+          "it": "Intensità luminosa sta cambiando",
+          "sv": "Dimningsnivå förändras",
+          "no": "Dempingsnivå endringer",
+          "es": "La intensidad de la luz está cambiando",
+          "da": "Dæmpningsniveauændringer"
+        },
+        "tokens": [
+          {
+            "name": "dim",
+            "type": "number",
+            "title": {
+              "en": "Level",
+              "nl": "Niveau",
+              "de": "Niveau",
+              "fr": "Niveau",
+              "it": "Livello",
+              "sv": "Nivå",
+              "no": "Nivå",
+              "es": "Nivel",
+              "da": "Niveau"
+            },
+            "example": 0.5
+          },
+          {
+            "name": "moveMode",
+            "type": "string",
+            "title": {
+              "en": "Move Mode",
+              "nl": "Move Mode",
+              "de": "Move Mode",
+              "fr": "Move Mode",
+              "it": "Move Mode",
+              "sv": "Move Mode",
+              "no": "Move Mode",
+              "es": "Move Mode",
+              "da": "Move Mode"
+            },
+            "example": "Up"
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "dim_start",
+        "title": {
+          "en": "Dim-level starts changing",
+          "nl": "Dim-niveau begint te veranderen",
+          "de": "Dimm-Niveau beginnt sich zu ändern",
+          "fr": "Intensité lumineuse commence à changer",
+          "it": "Intensità luminosa inizia a cambiare",
+          "sv": "Dimningsnivå börjar ändras",
+          "no": "Dempingsnivå begynner å endres",
+          "es": "La intensidad de la luz comienza a cambiar",
+          "da": "Dæmpningsniveauet begynder at ændre sig"
+        },
+        "tokens": [
+          {
+            "name": "moveMode",
+            "type": "string",
+            "title": {
+              "en": "Move Mode",
+              "nl": "Move Mode",
+              "de": "Move Mode",
+              "fr": "Move Mode",
+              "it": "Move Mode",
+              "sv": "Move Mode",
+              "no": "Move Mode",
+              "es": "Move Mode",
+              "da": "Move Mode"
+            },
+            "example": "Up"
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "dim_stop",
+        "title": {
+          "en": "Dimming level stops changing",
+          "nl": "Dim-niveau verandert niet meer",
+          "de": "Dimm-Niveau stoppt sich zu ändern",
+          "fr": "Intensité lumineuse cesse de changer",
+          "it": "Intensità luminosa smette di cambiare",
+          "sv": "Dimningsnivå slutar ändras",
+          "no": "Dempingsnivå slutter å endres",
+          "es": "La intensidad de la luz deja de cambiar",
+          "da": "Dæmpningsniveauet holder op med at ændre sig"
+        },
+        "tokens": [
+          {
+            "name": "moveMode",
+            "type": "string",
+            "title": {
+              "en": "Move Mode",
+              "nl": "Move Mode",
+              "de": "Move Mode",
+              "fr": "Move Mode",
+              "it": "Move Mode",
+              "sv": "Move Mode",
+              "no": "Move Mode",
+              "es": "Move Mode",
+              "da": "Move Mode"
+            },
+            "example": "Up"
+          }
+        ],
+        "args": [
+          {
+            "name": "my_device",
+            "type": "device",
+            "filter": "driver_id=NLG-remote"
+          }
+        ]
+      },
+      {
+        "id": "dim_tap",
+        "title": {
+          "en": "Briefly pressed dimming button",
+          "nl": "Druk kort op de dimknop",
+          "de": "Dimmtaste kurz gedrückt",
+          "fr": "Appuyez brièvement sur le bouton de variation",
+          "it": "Premere brevemente il pulsante di regolazione della luminosità",
+          "sv": "Tryck kort på nedtonningsknappen",
+          "no": "Trykk kort på neddempingsknappen",
+          "es": "Presione brevemente el botón de atenuación",
+          "da": "Tryk kort på dæmpningsknappen"
+        },
+        "tokens": [
+          {
+            "name": "moveMode",
+            "type": "string",
+            "title": {
+              "en": "Move Mode",
+              "nl": "Move Mode",
+              "de": "Move Mode",
+              "fr": "Move Mode",
+              "it": "Move Mode",
+              "sv": "Move Mode",
+              "no": "Move Mode",
+              "es": "Move Mode",
+              "da": "Move Mode"
+            },
+            "example": "Up"
           }
         ],
         "args": [
